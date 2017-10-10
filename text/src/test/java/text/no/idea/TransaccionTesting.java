@@ -39,14 +39,6 @@ public class TransaccionTesting {
 				String txId = matcher.group(1);
 				if(transacciones.get(txId) == null)
 					transacciones.put(txId, new Transaccion(txId));
-				if("8cef1f21-2127-4f90-9141-54070c71cab6".equalsIgnoreCase(txId)){
-					System.out.println(line);
-					Pattern p = Pattern.compile(".*<.*:(\\p{Alpha}+) \\p{Graph}*>(?:(<return>)?+)<(?:request|response)Header>.*");
-					Matcher m = p.matcher(line);
-					if(m.matches()){
-						System.out.println("Tipo de transaccion: " + m.group(1));
-					}
-				}
 				transacciones.get(txId).addMensaje(line);
 			}else{
 				throw new RuntimeException("No se encontro txId para el mensaje en linea [" + number + "]");
@@ -62,6 +54,11 @@ public class TransaccionTesting {
 			if(categoriaTransaccion.get(cantMensajes) == null)
 				categoriaTransaccion.put(cantMensajes, new ArrayList<Transaccion>());
 			categoriaTransaccion.get(cantMensajes).add(t);
+//			if("8cef1f21-2127-4f90-9141-54070c71cab6".equalsIgnoreCase(t.getId())){
+				for (String tipo : t.getTipoTransaccion()) {
+					System.out.println("TxID [" + t.getId() + "] tiene operacion [" + tipo + "]");
+				}
+//			}
 		}
 		
 		//Se lista por categoria

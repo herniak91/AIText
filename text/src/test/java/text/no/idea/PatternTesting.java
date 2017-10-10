@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import ai.text.parser.TextLineFinder;
+
 public class PatternTesting {
 
 	File wsMonitFile;
@@ -82,6 +84,13 @@ public class PatternTesting {
 				foundMessages.put(lines, currentLine);
 		}
 		System.out.println("Se guardaron [" + foundMessages.keySet().size() + "] mensajes entrantes/salientes de [" + lines + "] lineas - saveMatchesSubstringWithPattern");
+		Assert.assertNotEquals(0, foundMessages.keySet().size());
+	}
+	
+	@Test
+	public void findLinesInText() throws FileNotFoundException{
+		Map<Integer, String> foundMessages = TextLineFinder.findLinesInText(wsMonitFile, ".*[IO][BH]=<soapenv:[Body|Header].*");
+		System.out.println("Se guardaron [" + foundMessages.keySet().size() + "] mensajes entrantes/salientes - findLinesInText");
 		Assert.assertNotEquals(0, foundMessages.keySet().size());
 	}
 
